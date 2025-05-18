@@ -1,0 +1,11 @@
+{
+  "name": "@devzeng/cld2",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "Index.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "libcld2.so": "file:./src/main/cpp/types/libcld2"
+  }
+}

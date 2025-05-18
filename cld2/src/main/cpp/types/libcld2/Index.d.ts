@@ -1,0 +1,1 @@
+export const detect: (text: string) => object;

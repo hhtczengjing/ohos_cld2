@@ -1,10 +1,13 @@
 {
   "name": "@devzeng/cld2",
-  "version": "1.0.0",
-  "description": "Please describe the basic information.",
+  "version": "0.1.0",
+  "description": "Language detection for HarmonyOS.",
   "main": "Index.ets",
-  "author": "",
-  "license": "Apache-2.0",
+  "author": "zengjing <hhtczengjing@gmail.com>",
+  "keywords": [ "language", "detect", "language detection", "cld", "cld2" ],
+  "homepage": "https://github.com/hhtczengjing/ohos_cld2",
+  "repository": "https://github.com/hhtczengjing/ohos_cld2.git",
+  "license": "MIT",
   "dependencies": {
     "libcld2.so": "file:./src/main/cpp/types/libcld2"
   }

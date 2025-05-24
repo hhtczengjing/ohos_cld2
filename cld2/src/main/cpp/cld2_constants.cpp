@@ -4,7 +4,7 @@
 // Node APIs are not fully supported. To solve the compilation error of the interface cannot be found,
 // please include "napi/native_api.h".
 
-#include "cld2_utils.h"
+#include "cld2_constants.h"
 #include <string>
 #include <vector>
 

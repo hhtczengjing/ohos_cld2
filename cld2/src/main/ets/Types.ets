@@ -13,12 +13,12 @@ export interface Chunk {
 }
 
 export interface Options {
-  readonly isHTML?: boolean;
-  readonly languageHint?: string;
-  readonly encodingHint?: string;
-  readonly tldHint?: string;
-  readonly httpHint?: string;
-  readonly bestEffort?: boolean;
+  isHTML?: boolean;
+  languageHint?: string;
+  encodingHint?: string;
+  tldHint?: string;
+  httpHint?: string;
+  bestEffort?: boolean;
 }
 
 export interface DetectLanguage {

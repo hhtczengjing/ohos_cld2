@@ -1,4 +1,5 @@
-import { CLD } from '@devzeng/cld2';
+import { CLD, DetectLanguage, Options } from '@devzeng/cld2';
+import { util } from '@kit.ArkTS';
 
 @Extend(Text)
 function headerStyle() {
@@ -41,6 +42,12 @@ struct Index {
   @State message: string = 'Hello World';
   @State result1: string = '';
   @State result2: string = '';
+
+  aboutToAppear(): void {
+    this.readContent('test.txt').then((txt) => {
+      this.message = txt;
+    });
+  }
 
   build() {
     Column() {
@@ -102,12 +109,45 @@ struct Index {
     .width('100%')
   }
 
+  readContent(name: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      getContext(this).resourceManager.getRawFileContent(name, (error, rawFile) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        const textDecoder = util.TextDecoder.create('utf-8', { ignoreBOM: true });
+        const txt = textDecoder.decodeToString(rawFile);
+        resolve(txt);
+      });
+    });
+  }
+
   private detectSync() {
     const result = CLD.detect(this.message);
-    this.result1 = JSON.stringify(result);
+    this.result1 = this.formatResult(result);
   }
 
   private detectAsync() {
-    this.result2 = '暂不支持';
+    const options  = {
+      isHTML       : false,
+      languageHint : 'ENGLISH',
+      encodingHint : 'UTF8UTF8',
+      tldHint      : 'en',
+      httpHint     : 'en'
+    } as Options;
+    CLD.detectAsync(this.message, options).then((result) => {
+      this.result2 = this.formatResult(result);
+    });
+  }
+
+  private formatResult(result: DetectLanguage): string {
+    let str = "\n"
+    const languages = result.languages;
+    for (let index = 0; index < languages.length; index++) {
+      const language = languages[index];
+      str += `[${index+1}] name: ${language.name}, code: ${language.code}, percent: ${ language.percent}%\n`
+    }
+    return str
   }
 }

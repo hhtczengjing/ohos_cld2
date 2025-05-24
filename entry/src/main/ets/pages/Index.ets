@@ -40,6 +40,7 @@ function btnStyle() {
 @Component
 struct Index {
   @State message: string = 'Hello World';
+  @State result0: string = '';
   @State result1: string = '';
   @State result2: string = '';
 
@@ -65,6 +66,15 @@ struct Index {
       .padding({ left: 10, right: 10 })
 
       Row() {
+        Button('读取配置')
+          .fontSize(16)
+          .fontWeight(FontWeight.Regular)
+          .backgroundColor('#344F9C')
+          .onClick(() => {
+            const result = CLD.getContext();
+            this.result0 = JSON.stringify(result);
+          })
+
         Button('检测(同步)')
           .btnStyle()
           .onClick(() => {
@@ -83,26 +93,36 @@ struct Index {
       .alignItems(VerticalAlign.Center)
       .width('100%')
 
-      if (this.result1 || this.result2) {
-        Column() {
-          Text('Output')
-            .headerStyle()
+      if (this.result0 || this.result1 || this.result2) {
+        Scroll() {
+          Column() {
+            Text('Output')
+              .headerStyle()
 
-          if (this.result1) {
-            Text(`result1: ${this.result1}`)
-              .outputStyle()
-              .margin({ top: 10 })
-          }
+            if (this.result0) {
+              Text(`result0: ${this.result0}`)
+                .outputStyle()
+                .margin({ top: 10 })
+            }
 
-          if (this.result2) {
-            Text(`result2: ${this.result2}`)
-              .outputStyle()
-              .margin({ top: 10 })
+            if (this.result1) {
+              Text(`result1: ${this.result1}`)
+                .outputStyle()
+                .margin({ top: 10 })
+            }
+
+            if (this.result2) {
+              Text(`result2: ${this.result2}`)
+                .outputStyle()
+                .margin({ top: 10 })
+            }
           }
+          .margin({ top: 20 })
+          .justifyContent(FlexAlign.Start)
+          .alignItems(HorizontalAlign.Start)
         }
-        .margin({ top: 20 })
-        .justifyContent(FlexAlign.Start)
-        .alignItems(HorizontalAlign.Start)
+        .width('100%')
+        .layoutWeight(1)
       }
     }
     .height('100%')

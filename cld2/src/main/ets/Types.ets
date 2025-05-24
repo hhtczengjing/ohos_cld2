@@ -27,3 +27,9 @@ export interface DetectLanguage {
   readonly languages: Language[];
   readonly chunks: Chunk[];
 }
+
+export interface DetectContext {
+  readonly detectedLanguages: string[];
+  readonly languages: Record<string, string>;
+  readonly encodings: string[];
+}

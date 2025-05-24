@@ -236,12 +236,47 @@ static napi_value DetectAsync(napi_env env, napi_callback_info info) {
     return promise;
 }
 
+static napi_value DetectedLanguages(napi_env env, napi_callback_info info) {
+    auto rawDetected = ohos_cld2::Constants::getInstance().getDetected();
+    std::vector<std::string> languages;
+    for (size_t i = 0; i < rawDetected->size(); i++) {
+        auto rawLanguage = rawDetected->at(i);
+        languages.push_back(rawLanguage.name);
+    }
+    return StringArrayToNValue(env, languages);
+}
+
+static napi_value Languages(napi_env env, napi_callback_info info) {
+    napi_value languages;
+    napi_create_object(env, &languages);
+    auto rawLanguages = ohos_cld2::Constants::getInstance().getLanguages();
+    for (size_t i = 0; i < rawLanguages->size(); i++) {
+        auto rawLanguage = rawLanguages->at(i);
+        napi_set_named_property(env, languages, rawLanguage.name, StringToNValue(env, rawLanguage.code));
+    }
+    return languages;
+}
+
+static napi_value Encodings(napi_env env, napi_callback_info info) {
+    auto rawEncodings = ohos_cld2::Constants::getInstance().getEncodings();
+    auto numEncodings = rawEncodings->size();
+    std::vector<std::string> encodings;
+    for (size_t i = 0; i < numEncodings; i++) {
+        auto rawEncoding = rawEncodings->at(i);
+        encodings.push_back(rawEncoding.name);
+    }
+    return StringArrayToNValue(env, encodings);
+}
+
 EXTERN_C_START
 static napi_value Init(napi_env env, napi_value exports)
 {
     napi_property_descriptor desc[] = {
         { "detectSync", nullptr, DetectSync, nullptr, nullptr, nullptr, napi_default, nullptr },
-        { "detectAsync", nullptr, DetectAsync, nullptr, nullptr, nullptr, napi_default, nullptr }
+        { "detectAsync", nullptr, DetectAsync, nullptr, nullptr, nullptr, napi_default, nullptr },
+        { "getDetectedLanguages", nullptr, DetectedLanguages, nullptr, nullptr, nullptr, napi_default, nullptr },
+        { "getLanguages", nullptr, Languages, nullptr, nullptr, nullptr, napi_default, nullptr },
+        { "getEncodings", nullptr, Encodings, nullptr, nullptr, nullptr, napi_default, nullptr }
     };
     napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
     return exports;

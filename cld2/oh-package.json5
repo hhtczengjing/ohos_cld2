@@ -1,10 +1,10 @@
 {
   "name": "@devzeng/cld2",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Language detection for HarmonyOS.",
   "main": "Index.ets",
   "author": "zengjing <hhtczengjing@gmail.com>",
-  "keywords": [ "language", "detect", "language detection", "cld", "cld2" ],
+  "keywords": [ "language", "detect", "cld", "cld2" ],
   "homepage": "https://github.com/hhtczengjing/ohos_cld2",
   "repository": "https://github.com/hhtczengjing/ohos_cld2.git",
   "license": "MIT",
